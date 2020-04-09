@@ -3,24 +3,54 @@
     <v-img class="scenario" contain :src="scenario">
       <v-row class="fill-height" justify="center" align="center">
         <v-carousel
+          v-model="scene"
           class="carousel"
-          hide-delimiters=""
-          hide-delimiter-background=""
+          hide-delimiters
+          hide-delimiter-background
           :show-arrows="false"
         >
           <v-carousel-item transition="fade-transition">
             <v-row class="fill-height" justify="center" align="center">
-              <v-btn></v-btn>
+              <v-btn @click="scene++">Iniciar juego</v-btn>
             </v-row>
           </v-carousel-item>
           <v-carousel-item transition="fade-transition">
-            <v-btn></v-btn>
-            <v-btn></v-btn>
+            <v-row class="fill-height" justify="center" align="center">
+              <v-col cols="12">
+                <v-row class="fill-height" justify="center" align="center">
+                  <v-img class="mb-12" contain height="150" width="300" src="../assets/q1.png"></v-img>
+                </v-row>
+              </v-col>
+             
+            </v-row>
           </v-carousel-item>
         </v-carousel>
       </v-row>
-      <v-row class="fill-height" justify="center" align="center"> </v-row>
     </v-img>
+    <v-footer  color="black" absolute height="130">
+      <v-row dense >
+  <v-carousel
+        v-model="scene"
+          height="80"
+          hide-delimiters
+          hide-delimiter-background
+          :show-arrows="false" >
+        <v-carousel-item transition="fade-transition">
+          
+        </v-carousel-item>
+        <v-carousel-item transition="fade-transition">
+ <v-row class="fill-height" justify="space-around" align="center">
+        <v-btn>My name are Alan</v-btn>
+        <v-btn>My name is the Alan</v-btn>
+        <v-btn>My name is Alan</v-btn>
+        <v-btn>My name are a Alan</v-btn>
+      </v-row>
+        </v-carousel-item>
+      </v-carousel>
+      </v-row>
+    
+     
+    </v-footer>
   </div>
 </template>
 
@@ -32,20 +62,21 @@ export default {
     return {
       scenario:
         "https://res.cloudinary.com/dalnnaod7/image/upload/v1586409671/girl1_qhjqb6.png",
-      on_intro: true,
-      on_lvl_1: false,
-      btn: true,
+      scene: 0
     };
   },
   methods: {
     initLvl1() {
       this.on_intro = false;
       this.on_lvl_1 = true;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
+.question {
+  color: black;
+}
 .carousel {
 }
 .scenario {
