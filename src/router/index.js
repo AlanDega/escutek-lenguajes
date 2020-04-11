@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/auth/Login.vue";
 import Game2 from "../views/Game2.vue"
 import Game3 from "../views/Game3.vue"
+import Game4 from "../views/Game4.vue"
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
     path: "/game3",
     name: "game3",
     component: Game3,
+  },
+  {
+    path: "/game4",
+    name: "game4",
+    component: Game4,
   },
   {
     path: "/login",
