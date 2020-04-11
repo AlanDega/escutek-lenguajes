@@ -5,6 +5,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import { firestorePlugin } from "vuefire";
+import VueSpeech from "vue-speech";
+
+Vue.use(VueSpeech);
 
 Vue.use(firestorePlugin);
 

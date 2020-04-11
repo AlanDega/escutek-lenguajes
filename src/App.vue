@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import HelloWorld from "./components/HelloWorld";
+// import firebase from 'firebase'
+// import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld
+    // HelloWorld
   },
 
   data: () => ({
