@@ -1032,6 +1032,13 @@
   resolved "https://reservoir.haiku.ai:8910/@haiku%2fcore/-/core-4.5.2.tgz#0c054a1cb8bb26ecfebf7f0adafae194093d3c9a"
   integrity sha512-C1dFZcv2lBieVgfXM89D/BrKwBvWieYZzEL7BF3Xn9PDwMty1EjihiyZ2M+bORpSZ2ipcweg0gULb9Fz6UQqbQ==
 
+"@haiku/enjin1-mic@^0.0.4":
+  version "0.0.4"
+  resolved "https://reservoir.haiku.ai:8910/@haiku%2fenjin1-mic/-/enjin1-mic-0.0.4.tgz#ce863b488c94852b60d4303553114892751528ad"
+  integrity sha512-QitxA/l/eBnFwwIFK9C44ivSGPIeLiui5x1vqnpTLyaBGjpelAV8iGe6K+9pOQD8C8wbdVx8bctOHy581bsWZg==
+  dependencies:
+    "@haiku/core" "^4.5.1"
+
 "@haiku/escu-lvl@^0.0.2":
   version "0.0.2"
   resolved "https://reservoir.haiku.ai:8910/@haiku%2fescu-lvl/-/escu-lvl-0.0.2.tgz#c68de94a5382f20be948a43b51a3c480625985a5"
