@@ -15,11 +15,7 @@
         <v-card height="240" width="500" :class="compClasses">
           <v-row class="fill-height" justify="center" align="center">
             <v-window vertical v-model="words">
-              <v-window-item
-                class="window-item"
-                v-for="(challenge, i) in challenges"
-                :key="i"
-              >
+              <v-window-item class="window-item" v-for="(challenge, i) in challenges" :key="i">
                 <v-row class="text-challenge" justify="center" align="center">
                   <h1>{{ challenge }}</h1>
                 </v-row>
@@ -28,49 +24,38 @@
           </v-row>
         </v-card>
       </v-row>
-      <v-row justify="center">
+      <v-row justify="center" class="animation">
         <v-col cols="3"></v-col>
         <v-col cols="6">
           <v-row justify="center">
             <div>
-              <MicAnimation @click="console.log('hey')" />
+              <MicAnimation class="anime" @click="console.log('hey')" />
+              <vue-speech class="speech" @onTranscriptionEnd="onEnd" />
             </div>
           </v-row>
         </v-col>
         <v-col cols="3"></v-col>
       </v-row>
 
-      <v-row>
-        <vue-speech class="speech" @onTranscriptionEnd="onEnd" />
-      </v-row>
+      <v-row></v-row>
     </div>
     <div v-if="on_results">
       <v-row justify="center">
-        <v-card width="500">
+        <v-card width="500" class="result">
           <v-card-title>Resultados</v-card-title>
           <v-divider></v-divider>
           <v-card-text>
             <v-row justify="center">
-              <v-img
-                contain
-                src="../assets/level2.svg"
-                height="120 "
-                width="120  "
-              ></v-img>
+              <v-img contain src="../assets/level2.svg" height="120" width="120"></v-img>
             </v-row>
             <v-row justify="center">
-              <v-col cols="2"> </v-col>
+              <v-col cols="2"></v-col>
               <v-col cols="8">
                 <v-row justify="end" class="xp">
                   <h4 class="mb-2">{{ xp }}/{{ next_lvl_xp }} XP</h4>
                 </v-row>
                 <v-row>
-                  <v-progress-linear
-                    v-model="xp"
-                    color="deep-purple accent-3"
-                    rounded
-                  >
-                  </v-progress-linear>
+                  <v-progress-linear v-model="xp" color="deep-purple accent-3" rounded></v-progress-linear>
                 </v-row>
                 <v-row justify="center" class="mt-12">
                   <h2>XP ganado</h2>
@@ -84,8 +69,7 @@
                     rounded
                     dark
                     color="deep-purple accent-3"
-                    >Siguiente juego</v-btn
-                  >
+                  >Siguiente juego</v-btn>
                 </v-row>
               </v-col>
               <v-col cols="2"></v-col>
@@ -99,21 +83,27 @@
       <v-row justify="center">
         <v-stepper v-model="stepa" class="stepper">
           <v-stepper-header>
-            <v-stepper-step color="deep-purple accent-3" step="1" complete>{{
+            <v-stepper-step color="deep-purple accent-3" step="1" :complete="stepa > 1">
+              {{
               challenges[0]
-            }}</v-stepper-step>
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step color="deep-purple accent-3" step="2">{{
+            <v-stepper-step color="deep-purple accent-3" step="2" :complete="stepa > 2">
+              {{
               challenges[1]
-            }}</v-stepper-step>
+              }}
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step color="deep-purple accent-3" step="3">{{
+            <v-stepper-step color="deep-purple accent-3" step="3">
+              {{
               challenges[2]
-            }}</v-stepper-step>
+              }}
+            </v-stepper-step>
           </v-stepper-header>
         </v-stepper>
       </v-row>
@@ -130,7 +120,7 @@ export default {
   },
   data() {
     return {
-      stepa: 0,
+      stepa: 1,
       words: 0,
       word: "",
       text: "",
@@ -160,22 +150,28 @@ export default {
     data() {}
   },
   methods: {
-    goToGame4(){
-      this.$router.push('/game4')
+    goToGame4() {
+      this.$router.push("/game4");
     },
     next() {
       this.words = this.words + 1 === this.length ? 0 : this.words + 1;
+       const sound = new Audio(require("../assets/success.wav"));
+        sound.play();
     },
     onEnd({ lastSentence, transcription }) {
       this.word = lastSentence.toLowerCase();
       console.log("last", this.word);
       if (this.word === this.challenges[this.words] && this.words === 2) {
+        const sound = new Audio(require("../assets/success.wav"));
+        sound.play();
         this.on_game = false;
         this.on_results = true;
         setTimeout(() => {
-          this.xp = 60
-        },500)
+          this.xp = 60;
+        }, 500);
       } else if (this.word === this.challenges[this.words]) {
+         const sound = new Audio(require("../assets/success.wav"));
+        sound.play();
         this.words++;
         this.stepa++;
       } else {
@@ -192,6 +188,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.result {
+  margin-top: 200px;
+}
+.anime {
+  height: 100px;
+  margin-top: 20px;
+}
+.animation {
+  margin-top: -10px;
+}
 .stepper {
   width: 50%;
 }
@@ -204,7 +210,7 @@ p {
   color: black;
 }
 .speech {
-  color: white;
+  color: black;
 }
 .base {
   background: white;
@@ -222,12 +228,14 @@ p {
 .window-item {
   width: 500px;
   height: 100%;
+  margin-bottom: 20px;
 }
 .text-challenge {
   height: 240px;
 }
 .challenge-card {
-  margin-top: 70px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 .header {
   font-size: 48px;

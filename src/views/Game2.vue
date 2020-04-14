@@ -1,8 +1,7 @@
 <template>
   <div class="main">
     <v-row class="fill-height" justify="center" align="center">
-      <v-col cols="3"> </v-col>
-      <v-col cols="6" class="scenario" v-if="on_questions">
+      <v-col cols="12" class="scenario" v-if="on_questions">
         <v-carousel
           v-model="scene"
           height="1000"
@@ -10,26 +9,24 @@
           hide-delimiter-background
           :show-arrows="false"
         >
-          <v-carousel-item
-            v-for="(question, i) in questions"
-            :key="i"
-            transition="fade-transition"
-          >
+          <v-carousel-item v-for="(question, i) in questions" :key="i" transition="fade-transition">
             <v-row justify="center" class="mt-10">
               <h1>{{ question.question }}</h1>
             </v-row>
+            <v-row>
+              <v-col cols></v-col>
+              <v-col cols="6">
+                <v-divider class color="indigo"></v-divider>
+              </v-col>
+              <v-col cols></v-col>
+            </v-row>
             <v-row justify="center" class="mt-12">
-              <iframe
-                id="ytplayer"
-                type="text/html"
-                width="640"
-                height="360"
-                :src="question.url"
-                frameborder="0"
-              />
+              <youtube :video-id="question.video_id" @ready="ready" @playing="playing"  :player-vars="{ autoplay: 1 }"></youtube>
             </v-row>
           </v-carousel-item>
         </v-carousel>
+
+        <!-- -------------- termina carousel -------------------- -->
         <v-snackbar
           absolute
           :timeout="1500"
@@ -41,13 +38,7 @@
           <h2>Acertaste</h2>
           <h3>+ 20XP</h3>
         </v-snackbar>
-        <v-snackbar
-          absolute
-          color="red"
-          top
-          vertical
-          v-model="incorrect_result"
-        >
+        <v-snackbar absolute color="red" top vertical v-model="incorrect_result">
           <v-row justify="center">
             <h2>Incorrecto</h2>
           </v-row>
@@ -64,27 +55,16 @@
             <v-card-text>
               <v-row justify="center">
                 <LvlUpAnimation v-if="on_lvl_up" />
-                <v-img
-                  v-if="!on_lvl_up"
-                  contain
-                  src="../assets/level.svg"
-                  height="120 "
-                  width="120  "
-                ></v-img>
+                <v-img v-if="!on_lvl_up" contain src="../assets/level.svg" height="120" width="120"></v-img>
               </v-row>
               <v-row justify="center">
-                <v-col cols="2"> </v-col>
+                <v-col cols="2"></v-col>
                 <v-col cols="8">
                   <v-row justify="end" class="xp">
                     <p>{{ xp }}/{{ next_lvl_xp }} XP</p>
                   </v-row>
                   <v-row>
-                    <v-progress-linear
-                      v-model="xp"
-                      color="deep-purple accent-3"
-                      rounded
-                    >
-                    </v-progress-linear>
+                    <v-progress-linear v-model="xp" color="deep-purple accent-3" rounded></v-progress-linear>
                   </v-row>
                   <v-row justify="center" class="mt-12">
                     <h2>XP ganado</h2>
@@ -93,20 +73,18 @@
                     <h2 class="earned-xp">60</h2>
                   </v-row>
                   <v-row justify="center" class="mt-10">
-                    <v-btn @click="goToGame3" rounded dark color="deep-purple accent-3"
-                      >Siguiente juego</v-btn
-                    >
+                    <v-btn
+                      @click="goToGame3"
+                      rounded
+                      dark
+                      color="deep-purple accent-3"
+                    >Siguiente juego</v-btn>
                   </v-row>
                 </v-col>
                 <v-col cols="2"></v-col>
               </v-row>
             </v-card-text>
           </v-card>
-        </v-row>
-      </v-col>
-      <v-col cols="3">
-        <v-row class="fill-height" justify="center" align="start">
-          <!-- <v-img></v-img> -->
         </v-row>
       </v-col>
     </v-row>
@@ -122,36 +100,28 @@
           hide-delimiter-background
           :show-arrows="false"
         >
-          <v-carousel-item
-            v-for="(question, i) in questions"
-            :key="i"
-            transition="fade-transition"
-          >
+          <v-carousel-item v-for="(question, i) in questions" :key="i" transition="fade-transition">
             <v-row class="fill-height" justify="space-around" align="center">
               <v-btn
                 @click="checkAnswer(question.answer1, i)"
                 dark
                 color="deep-purple accent-3"
-                >{{ question.answer1 }}</v-btn
-              >
+              >{{ question.answer1 }}</v-btn>
               <v-btn
                 @click="checkAnswer(question.answer2, i)"
                 dark
                 color="deep-purple accent-3"
-                >{{ question.answer2 }}</v-btn
-              >
+              >{{ question.answer2 }}</v-btn>
               <v-btn
                 @click="checkAnswer(question.answer3, i)"
                 dark
                 color="deep-purple accent-3"
-                >{{ question.answer3 }}</v-btn
-              >
+              >{{ question.answer3 }}</v-btn>
               <v-btn
                 @click="checkAnswer(question.answer4, i)"
                 dark
                 color="deep-purple accent-3"
-                >{{ question.answer4 }}</v-btn
-              >
+              >{{ question.answer4 }}</v-btn>
             </v-row>
           </v-carousel-item>
         </v-carousel>
@@ -177,6 +147,7 @@ export default {
       questions: [
         {
           question: "¿Cuál es la regla número 1 del club de la pelea?",
+          video_id: "YJVGD6eTZ7g",
           url:
             "http://www.youtube.com/embed/YJVGD6eTZ7g?autoplay&origin=http://example.com",
           answer1: "Nadie pelea afuera",
@@ -187,6 +158,7 @@ export default {
         },
         {
           question: "¿Quién está obsesionada por jugar Nerve?",
+          video_id: "q8Wj4buHUtE",
           url:
             "http://www.youtube.com/embed/q8Wj4buHUtE?autoplay&origin=http://example.com",
           answer1: "Venus",
@@ -199,6 +171,7 @@ export default {
           question: "¿Cuál es la lección que Luke le enseña a rei?",
           url:
             "http://www.youtube.com/embed/pmspEvBtbY4?autoplay&origin=http://example.com",
+          video_id: "pmspEvBtbY4",
           answer1: "ella tiene la fuerza",
           answer2: "la fuerza no les pertence a los jedi",
           answer3: "los jedi tienen la fuerza",
@@ -218,6 +191,8 @@ export default {
     };
   },
   mounted() {},
+  computed: {},
+
   watch: {
     scene() {
       if (this.scene === 3) {
@@ -233,16 +208,26 @@ export default {
     }
   },
   methods: {
-    goToGame3(){
-      this.$router.push('/game3')
+    ready(event) {
+      this.player = event.target;
+    },
+    stop() {
+      this.player.stopVideo();
+    },
+    goToGame3() {
+      this.$router.push("/game3");
     },
     checkAnswer(answer, i) {
       if (answer === this.questions[i].correct_answer) {
+        this.stop();
+
         const sound = new Audio(require("../assets/success.wav"));
         sound.play();
         this.correct_result = true;
         this.scene++;
       } else {
+        this.stop();
+
         this.incorrect_result = true;
         this.scene++;
       }
@@ -252,6 +237,9 @@ export default {
 </script>
 
 <style scoped>
+.iframe {
+  margin-top: 100px;
+}
 .video {
   outline: none;
 }

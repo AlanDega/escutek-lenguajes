@@ -1,13 +1,15 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <h2>Login</h2>
+  <v-container class="fill-height">
+    <v-row class="fill-height">
+      <v-card>
+        <v-card-title>
+          <h2>Ingresa</h2>
+        </v-card-title>
         <v-text-field label="alias" v-model="alias"></v-text-field>
         <v-text-field label="email" v-model="email"></v-text-field>
         <v-text-field label="contraseña" v-model="password"></v-text-field>
         <v-btn @click="login" dark rounded color="deep-purple accent-3">continuar</v-btn>
-      </v-col>
+      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -33,7 +35,7 @@ export default {
         })
         .then(() => {
           console.log("exito");
-          this.$router.push("/");
+          this.$router.push("/game1");
         });
     }
   }

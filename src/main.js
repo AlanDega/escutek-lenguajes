@@ -6,6 +6,10 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import { firestorePlugin } from "vuefire";
 import VueSpeech from "vue-speech";
+import VueYouTubeEmbed from 'vue-youtube-embed';
+
+
+Vue.use(VueYouTubeEmbed);
 
 Vue.use(VueSpeech);
 
